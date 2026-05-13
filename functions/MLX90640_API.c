@@ -391,6 +391,60 @@ int MLX90640_GetCurMode(uint8_t slaveAddr)
 
 //------------------------------------------------------------------------------
 
+int MLX90640_SetSubPageRepeat(uint8_t slaveAddr, uint8_t subPageRepeat){
+    uint16_t controlRegister1;
+    int value;
+    int error;
+
+    value = (subPageRepeat & 0x01)<<3;
+
+    error = MLX90640_I2CRead(slaveAddr, MLX90640_CTRL_REG, 1, &controlRegister1);
+    if (error == 0){
+        value = (controlRegister1 & ~MLX90640_CTRL_SUBPAGE_REPEAT_MASK) | value;
+        error = MLX90640_I2CWrite(slaveAddr, MLX90640_CTRL_REG, value);
+    }
+
+    return error;
+}
+
+//------------------------------------------------------------------------------
+
+int MLX90640_SetSubPage(uint8_t slaveAddr, uint8_t subPage){
+    uint16_t controlRegister1;
+    int value;
+    int error;
+
+    value = (subPage & 0x01)<<4;
+
+    error = MLX90640_I2CRead(slaveAddr, MLX90640_CTRL_REG, 1, &controlRegister1);
+    if (error == 0){
+        value = (controlRegister1 &  ~MLX90640_CTRL_SUBPAGE_MASK) | value;
+        error = MLX90640_I2CWrite(slaveAddr, MLX90640_CTRL_REG, value);
+    }
+
+    return error;
+}
+
+//------------------------------------------------------------------------------
+
+int MLX90640_SetDeviceMode(uint8_t slaveAddr, uint8_t deviceMode){
+    uint16_t controlRegister1;
+    int value;
+    int error;
+
+    value = (deviceMode & 0x01)<<4;
+
+    error = MLX90640_I2CRead(slaveAddr, MLX90640_CTRL_REG, 1, &controlRegister1);
+    if(error == 0){
+        value = (controlRegister1 & ~MLX90640_CTRL_DEVICE_MODE_MASK) | value;
+        error = MLX90640_I2CWrite(slaveAddr, MLX90640_CTRL_REG, value);
+    }
+
+    return error;
+}
+
+//------------------------------------------------------------------------------
+
 void MLX90640_CalculateTo(uint16_t *frameData, const paramsMLX90640 *params, float emissivity, float tr, float *result)
 {
     float vdd;

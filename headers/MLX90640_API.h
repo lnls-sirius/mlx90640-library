@@ -56,6 +56,9 @@
 #define MLX90640_CTRL_RESOLUTION_MASK REG_MASK(MLX90640_CTRL_RESOLUTION_SHIFT,2)
 #define MLX90640_CTRL_MEAS_MODE_SHIFT 12
 #define MLX90640_CTRL_MEAS_MODE_MASK BIT_MASK(12)
+#define MLX90640_CTRL_SUBPAGE_REPEAT_MASK BIT_MASK(3)
+#define MLX90640_CTRL_SUBPAGE_MASK REG_MASK(4,3)
+#define MLX90640_CTRL_DEVICE_MODE_MASK BIT_MASK(1)
 
 #define MLX90640_MS_BYTE_SHIFT 8
 #define MLX90640_MS_BYTE_MASK 0xFF00
@@ -126,5 +129,8 @@ typedef struct
     int MLX90640_SetInterleavedMode(uint8_t slaveAddr);
     int MLX90640_SetChessMode(uint8_t slaveAddr);
     void MLX90640_BadPixelsCorrection(uint16_t *pixels, float *to, int mode, paramsMLX90640 *params);
-    
+    int MLX90640_SetSubPageRepeat(uint8_t slaveAddr, uint8_t subPageRepeat);
+    int MLX90640_SetSubPage(uint8_t slaveAddr, uint8_t subPage);
+    int MLX90640_SetDeviceMode(uint8_t slaveAddr, uint8_t deviceMode);
+
 #endif
